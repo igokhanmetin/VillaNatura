@@ -32,10 +32,11 @@ namespace VillaNatura.Web.Controllers
             
             return View(homeVM);
         }
-
+  
         public IActionResult GetVillasByDate(int nights , DateOnly checkInDate)
         {
-            var villaList = _unitOfWork.Villa.GetAll(includeProperties:"VillaAmenity").ToList();
+            Thread.Sleep(500);
+            var villaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenity").ToList();
             foreach (var villa in villaList)
             {
                 if (villa.Id % 2 == 0)
@@ -50,7 +51,7 @@ namespace VillaNatura.Web.Controllers
                 Nights = nights
             };
 
-            return View(homeVM);
+            return PartialView("_VillaList",homeVM);
         }
 
         public IActionResult Privacy()
