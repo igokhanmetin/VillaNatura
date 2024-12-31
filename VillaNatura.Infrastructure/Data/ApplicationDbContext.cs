@@ -20,6 +20,7 @@ namespace VillaNatura.Infrastructure.Data
         public DbSet<VillaNumber> VillaNumbers { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Booking> bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

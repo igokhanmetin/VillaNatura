@@ -25,14 +25,8 @@ namespace VillaNatura.Web.Controllers
             };
             return View(homeVM);
         }
+
         [HttpPost]
-        public IActionResult Index(HomeVM homeVM)
-        {
-            homeVM.VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenity");
-            
-            return View(homeVM);
-        }
-  
         public IActionResult GetVillasByDate(int nights , DateOnly checkInDate)
         {
             Thread.Sleep(500);
