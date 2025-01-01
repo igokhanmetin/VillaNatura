@@ -62,13 +62,19 @@ namespace VillaNatura.Infrastructure.Migrations
                 name: "IX_bookings_VillaId",
                 table: "bookings",
                 column: "VillaId");
+
+         
         }
 
         /// <inheritdoc />
+        /// 
+       
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "bookings");
+           
         }
+
     }
 }

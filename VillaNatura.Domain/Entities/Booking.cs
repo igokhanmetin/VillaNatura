@@ -20,7 +20,7 @@ namespace VillaNatura.Domain.Entities
 
         public int VillaId { get; set; }
         [ForeignKey("VillaId")]
-        public Villa Villa { get; set; }
+        public Villa Villa { get; set; } 
 
         [Required]
         public string Name { get; set; }
@@ -48,6 +48,8 @@ namespace VillaNatura.Domain.Entities
 
         public DateTime ActualCheckInDate { get; set; }
         public DateTime ActualCheckOutDate { get; set; }
+
+       
 
         public int VillaNumber { get; set; }
 
