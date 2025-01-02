@@ -26,14 +26,15 @@ namespace VillaNatura.Infrastructure.Repository
             _db.bookings.Update(entity);
         }
 
-        public void UpdateStatus(int bookingId, string bookingStatus)
+        public void UpdateStatus(int bookingId, string bookingStatus, int villaNumber=0)
         {
             var bookingFromDb = _db.bookings.FirstOrDefault(m => m.Id == bookingId);
             if (bookingFromDb != null)
             {
                 bookingFromDb.Status = bookingStatus;
-                if(bookingStatus==SD.StatusCheckedIn)
+                if(bookingStatus == SD.StatusCheckedIn)
                 {
+                    bookingFromDb.VillaNumber= villaNumber;
                     bookingFromDb.ActualCheckInDate = DateTime.Now;
                 }
                 if (bookingStatus == SD.StatusCompleted)
