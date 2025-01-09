@@ -1,5 +1,12 @@
 ﻿@model Booking
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
 <div class="p-4 mt-0 mt-lg-4">
     <div class="row" style="border: 1px solid #aaa;">
 
@@ -28,10 +35,10 @@
         </div>
         <div class="col-12 col-lg-6 p-4 2 mt-4 mt-md-0" style="border-left:1px solid #aaa">
             <form method="post">
+                
                 <input asp-for="Id" hidden />
                 <input asp-for="VillaId" hidden />
                 <input asp-for="UserId" hidden />
-                <input asp-for="VillaNumber" hidden />
                 <input asp-for="CheckInDate" hidden />
                 <input asp-for="CheckOutDate" hidden />
                 <input asp-for="Nights" hidden />
@@ -76,21 +83,19 @@
                     </div>
                     <div class="form-group pt-2 col-6">
                         <label class="text-warning">Giriş Tarihi</label>
-                        <input asp-for="CheckInDate" disabled class="form-control" value="@Model.CheckInDate.ToString("yyyy-MM-dd")" />
+                        <input asp-for="CheckInDate" disabled class="form-control" value="@Model.CheckInDate.ToString("dd.MM.yyyy")" />
                     </div>
                     <div class="form-group pt-2 col-6">
                         <label class="text-warning">Konaklama Başlangıç Tarihi</label>
-                        <input asp-for="ActualCheckInDate" disabled class="form-control" value="@Model.ActualCheckInDate.ToString("yyyy-MM-dd")" />
+                        <input asp-for="ActualCheckInDate" disabled class="form-control" value="@Model.ActualCheckInDate.ToString("dd.MM.yyyy")" />
                     </div>
-
-
                     <div class="form-group pt-2 col-6">
                         <label class="text-warning">Çıkış Tarihi</label>
-                        <input asp-for="CheckOutDate" disabled class="form-control" value="@Model.CheckOutDate.ToString("yyyy-MM-dd")" />
+                        <input asp-for="CheckOutDate" disabled class="form-control" value="@Model.CheckOutDate.ToString("dd.MM.yyyy")" />
                     </div>
                     <div class="form-group pt-2 col-6">
                         <label class="text-warning">Konaklama Çıkış Tarihi</label>
-                        <input asp-for="ActualCheckOutDate" disabled class="form-control" value="@Model.ActualCheckOutDate.ToString("yyyy-MM-dd")" />
+                        <input asp-for="ActualCheckOutDate" disabled class="form-control" value="@Model.ActualCheckOutDate.ToString("dd.MM.yyyy")" />
                     </div>
                     @if (Model.Status == SD.StatusApproved && User.IsInRole(SD.Role_Admin))
                     {
@@ -106,6 +111,8 @@
                     }
                     else
                     {
+                        <input asp-for="VillaNumber" hidden />
+
                         @if (Model.Status == SD.StatusCheckedIn || Model.Status == SD.StatusCompleted)
                         {
                             <div class="form-group pt-2 col-6">
@@ -144,6 +151,7 @@
                                     class="btn btn-warning form-control my-1">
                                 <i class="bi bi-check2-square"></i> &nbsp; Check In
                             </button>
+                           
                         }
                         @if (Model.Status == SD.StatusCheckedIn)
                         {

@@ -28,9 +28,9 @@ namespace VillaNatura.Web.Controllers
         [Authorize]
         public IActionResult FinalizeBooking(int villaId, DateOnly checkInDate, int nights)
         {
+
             var claimsIdentity =(ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
             ApplicationUser user = _unitOfWork.User.Get(u=>u.Id == userId);
 
             Booking booking = new()
@@ -60,7 +60,29 @@ namespace VillaNatura.Web.Controllers
 
             booking.Status = SD.StatusPending;
             booking.BookingDate = DateTime.Now;
-            booking.CheckInDate = DateOnly.FromDateTime(DateTime.Now);
+            // booking.CheckInDate = DateOnly.FromDateTime(DateTime.Now);
+
+
+            var villaNumberList = _unitOfWork.VillaNumber.GetAll().ToList();
+            var bookedVillas = _unitOfWork.Booking.GetAll(u => u.Status == SD.StatusApproved ||
+            u.Status == SD.StatusCheckedIn).ToList();
+
+           
+                int roomAvailable = SD.VillaRoomsAvailable_Count
+                    (villa.Id, villaNumberList, booking.CheckInDate, booking.Nights, bookedVillas);
+            if(roomAvailable == 0)
+            {
+                TempData["Error"] = "Seçtiğiniz tarihlerde uygun villa bulunmamaktadır.";
+                return RedirectToAction(nameof(FinalizeBooking), new
+                {
+                    villaId = booking.VillaId,
+                    checkInDate = booking.CheckInDate,
+                    nights = booking.Nights
+                }); ;
+            }
+
+
+
 
             _unitOfWork.Booking.Add(booking);
             _unitOfWork.Save();
