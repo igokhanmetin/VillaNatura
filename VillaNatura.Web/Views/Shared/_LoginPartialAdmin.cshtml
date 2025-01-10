@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav d-none d-md-flex nav-login">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+           data-bs-toogle="dropdown" aria-expanded="false">
+            Merhaba @UserManager.GetUserName(User)
+        </a>
+        <ul class="dropdown" aria-labelledby="navbarDropdown">
+            <a class="nav-link text-center" asp-controller="Account" asp-action="Logout">Çıkış Yap</a>
+        </ul>
+    </li>
+</ul>
